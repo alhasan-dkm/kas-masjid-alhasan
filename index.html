@@ -6,146 +6,194 @@
     <title>Laporan Keuangan Masjid</title>
 
     <style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #f5f7f8;
+    }
+
+    h1 {
+        color: rgb(34, 34, 97);
+        margin: 0;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background: darkgreen;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 6px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background: #e8f5e9;
+    }
+
+    h2 {
+        margin-top: 25px;
+        color: #222;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    #dashboard {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .card p {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .pemasukan {
+        border-top: 5px solid green;
+    }
+
+    .pengeluaran {
+        border-top: 5px solid red;
+    }
+
+    .saldo {
+        border-top: 5px solid goldenrod;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .print-header {
+        display: none;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* =========================
+       RESPONSIVE MOBILE HP
+    ========================= */
+    @media (max-width: 768px) {
         body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-            background: #f5f7f8;
-        }
-
-        h1 {
-            color: rgb(34, 34, 97);
-            margin: 0;
-        }
-
-        input, select {
-            width: 100%;
+            margin: 10px;
             padding: 10px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background: darkgreen;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 6px;
-            margin-right: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background: #e8f5e9;
-        }
-
-        h2 {
-            margin-top: 25px;
-            color: #222;
         }
 
         .header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .header img {
+            width: 80px;
+        }
+
+        h1 {
+            font-size: 22px;
         }
 
         #dashboard {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
 
         .card {
-            flex: 1;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
+            width: 100%;
         }
 
-        .card p {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 10px;
+        button {
+            width: 100%;
+            margin-right: 0;
         }
 
-        .pemasukan {
-            border-top: 5px solid green;
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+
+    /* =========================
+       PRINT PDF
+    ========================= */
+    @media print {
+        body * {
+            visibility: hidden;
         }
 
-        .pengeluaran {
-            border-top: 5px solid red;
+        #areaLaporan, #areaLaporan * {
+            visibility: visible;
         }
 
-        .saldo {
-            border-top: 5px solid goldenrod;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-size: 14px;
+        #areaLaporan {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
         }
 
         .print-header {
+            display: flex;
+        }
+
+        button,
+        #filterJenis,
+        #labelFilter,
+        .kolom-aksi {
             display: none;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
         }
-
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-
-            #areaLaporan, #areaLaporan * {
-                visibility: visible;
-            }
-
-            #areaLaporan {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-
-            .print-header {
-                display: flex;
-            }
-
-            button,
-            #filterJenis,
-            #labelFilter,
-            .kolom-aksi {
-                display: none;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
